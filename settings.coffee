@@ -21,7 +21,7 @@ module.exports =
 	# 
 	# The following works out of the box with Mongo's default settings:
 	mongo:
-		url : process.env["SHARELATEX_MONGO_URL"] or 'mongodb://dockerhost/sharelatex'
+		url : process.env["SHARELATEX_MONGO_URL"] or 'mongodb://' + process.env["MONGO_PORT_27017_TCP_ADDR"] + ':' + process.env["MONGO_PORT_27017_TCP_PORT"] + '/sharelatex'
 
 	# Redis is used in ShareLaTeX for high volume queries, like real-time
 	# editing, and session management.
@@ -29,8 +29,8 @@ module.exports =
 	# The following config will work with Redis's default settings:
 	redis:
 		web: redisConfig =
-			host: process.env["SHARELATEX_REDIS_HOST"] or "dockerhost"
-			port: process.env["SHARELATEX_REDIS_PORT"] or "6379"
+			host: process.env["SHARELATEX_REDIS_HOST"] or process.env["REDIS_PORT_6379_TCP_ADDR"] 
+			port: process.env["SHARELATEX_REDIS_PORT"] or process.env["REDIS_PORT_6379_TCP_PORT"]
 			password: process.env["SHARELATEX_REDIS_PASS"] or ""
 		fairy: redisConfig
 
